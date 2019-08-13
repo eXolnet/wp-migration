@@ -1,0 +1,40 @@
+{
+    "name": "exolnet/wp-migrate",
+    "description": "Add a laravel like migration system",
+    "type": "wp-cli-package",
+    "keywords": [
+        "exolnet",
+        "wordpress",
+        "migration"
+    ],
+    "homepage": "https://github.com/eXolnet/wp-migration",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "eXolnet",
+            "homepage": "https://www.exolnet.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.0"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^3.4",
+        "wp-cli/wp-cli": "*"
+    },
+    "autoload": {
+        "psr-4": { "WP_CLI\\": "src" },
+        "files": [
+            "\\src\\Migrator.php",
+            "\\src\\Repository.php",
+            "\\src\\Command.php"
+        ]
+    },
+    "scripts": {
+        "lint": "vendor/bin/phpcs -p --standard=PSR2 --extensions=php --ignore=*/vendor/*,*/src/migrationBoilerplate.php .",
+        "lint-fix": "vendor/bin/phpcbf -p --standard=PSR2 --extensions=php --ignore=*/vendor/*,*/src/migrationBoilerplate.php ."
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
