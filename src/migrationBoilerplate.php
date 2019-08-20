@@ -1,6 +1,8 @@
 <?php
 
-class MigrationBoilerplate
+use Exolnet\WPMigration\Migration;
+
+class MigrationBoilerplate extends Migration
 {
     /**
      * Run the migrations.
