@@ -53,6 +53,11 @@ class Command
      * [--rollback]
      * : A flag to run the rollback of the latest migration or a specific batch using the step
      *
+     * [--nodev]
+     * : Run only migration that are not listed as development. To specify if the migration only in
+     *   development you need to set the public variable `public $environment = 'development';`
+     *   in your migration class
+     *
      * [--step]
      * : Force the migrations to be run so they can be rolled back individually.
      *
@@ -66,6 +71,10 @@ class Command
      */
     public function migrate($args, array $assocArgs)
     {
+        if (array_key_exists('nodev', $assocArgs) && $assocArgs['nodev']) {
+            $this->migrator->setNoDev(true);
+        }
+
         if (array_key_exists('rollback', $assocArgs) && $assocArgs['rollback']) {
             $this->migrator->rollback($this->getMigrationPaths(), [
                 'step' => $assocArgs['step'] ?? 0,

@@ -43,12 +43,17 @@ Make a migration skeleton file in migrations folder in the themes folder
   * [--rollback]
   *     : A flag to run the rollback of the latest migration or a specific batch using the step
   *
+  * [--nodev]
+  *     : Run only migration that are not listed as development. To specify if the migration only in
+  *       development you need to set the public variable `public $environment = 'development';`
+  *       in your migration class
+  *
   * [--step]
   *     : Force the migrations to be run so they can be rolled back individually.
   *
   * ## EXAMPLES
   *
-  *     wp exolnet migrate
+  *     wp migration migrate
   *
   */
 ```

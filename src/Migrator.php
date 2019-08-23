@@ -15,6 +15,11 @@ class Migrator
     private $migrationsFolder;
 
     /**
+     * @var bool
+     */
+    private $noDev = false;
+
+    /**
      * Create a new migrator instance.
      *
      */
@@ -43,6 +48,10 @@ class Migrator
             $files,
             $this->repository->getRan()
         ));
+
+        if ($this->noDev) {
+            $migrations = $this->filterNoDev($migrations);
+        }
 
         // Once we have all these migrations that are outstanding we are ready to run
         // we will go ahead and run them "up". This will execute each migration as
@@ -303,5 +312,31 @@ class Migrator
         if (method_exists($migration, $method)) {
             $migration->{$method}();
         }
+    }
+
+    /**
+     * @param bool $value
+     */
+    public function setNoDev(bool $value)
+    {
+        $this->noDev = $value;
+    }
+
+    /**
+     * @param array $migrations
+     * @return array
+     */
+    private function filterNoDev(array $migrations)
+    {
+        return array_filter($migrations, function ($file) {
+            $migration = $this->resolve(
+                $name = $this->getMigrationName($file)
+            );
+            if (!$this->noDev || ($this->noDev && $migration->environment === 'production')) {
+                return true;
+            }
+
+            return false;
+        });
     }
 }
