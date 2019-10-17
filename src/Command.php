@@ -41,6 +41,9 @@ class Command
 
                 dbDelta($sql);
                 update_option('exolnet_migrations_table_created', true);
+            } else {
+                $wpdb->query('TRUNCATE ' . $ptbd_table_name . '');
+                update_option('exolnet_migrations_table_created', true);
             }
         }
     }
